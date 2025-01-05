@@ -1,0 +1,37 @@
+@startuml
+package "Activity Provider: Radiological Scenarios" {
+    component "Server REST" {
+        interface IConfig
+        interface IParams
+        interface IUserDeploy
+        interface IAnalyticsData
+        interface IAnalyticsList
+    }
+
+    component "RESTToFactoryAdapter" {
+        interface ITranslate
+    }
+
+    package "Abstract Factory Pattern" {
+        component "AbstractFactory" {
+            interface IScenarioFactory
+        }
+        component "MedicalFactory" {
+            IScenarioFactory --> AbstractFactory
+        }
+        component "IndustrialFactory" {
+            IScenarioFactory --> AbstractFactory
+        }
+    }
+
+    component "Medical Scenario Object"
+    component "Industrial Scenario Object"
+}
+
+"Server REST" --> "RESTToFactoryAdapter" : Traduz chamadas HTTP
+"RESTToFactoryAdapter" --> "AbstractFactory" : Conecta ao padrão
+"AbstractFactory" --> "MedicalFactory"
+"AbstractFactory" --> "IndustrialFactory"
+"MedicalFactory" --> "Medical Scenario Object"
+"IndustrialFactory" --> "Industrial Scenario Object"
+@enduml

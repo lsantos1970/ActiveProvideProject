@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Configuração da Atividade</title>
+</head>
+<body>
+    <h1>Configuração da Atividade</h1>
+    <label for="scenario">Tipo de Cenário:</label>
+    <select name="scenario_type" id="scenario">
+        <option value="medical">Médico</option>
+        <option value="industrial">Industrial</option>
+    </select><br>
+    <label for="threshold">Limite de Radiação (μSv):</label>
+    <input type="number" name="radiation_threshold" id="threshold" min="0"><br>
+    <label for="time">Tempo Máximo (segundos):</label>
+    <input type="number" name="max_time" id="time" min="0"><br>
+    <label for="distance">Distância Sugerida (metros):</label>
+    <input type="number" name="suggested_distance" id="distance" step="0.1"><br>
+</body>
+</html>

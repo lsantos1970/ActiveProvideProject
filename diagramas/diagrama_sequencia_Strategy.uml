@@ -1,0 +1,30 @@
+@startuml
+actor User as "Técnico"
+participant Server as "Server REST"
+participant Adapter as "RESTToFactoryAdapter"
+participant MedicalFactory
+participant MedicalEnvironment
+participant LeadApron
+participant AnalysisContext
+participant MedicalAnalysisStrategy
+
+'Técnico solicita configuração do cenário médico
+"Técnico" -> Server: POST /create_scenario
+note right: {"scenario_type": "medical"}
+
+Server -> Adapter: Traduzir solicitação
+Adapter -> MedicalFactory: createEnvironment()
+MedicalFactory -> MedicalEnvironment: getDescription()
+Adapter <-- MedicalFactory: Ambiente médico configurado
+
+Adapter -> MedicalFactory: createEquipment()
+MedicalFactory -> LeadApron: operate()
+Adapter <-- MedicalFactory: Equipamento: Avental de Chumbo
+
+Server -> AnalysisContext: Enviar dados de análise
+AnalysisContext -> MedicalAnalysisStrategy: Executar análise médica
+AnalysisContext <-- MedicalAnalysisStrategy: Resultados da análise
+
+Server <-- Adapter: Resposta (Ambiente + Equipamento + Resultados)
+"Técnico" <-- Server: JSON com descrição do cenário e métricas analíticas
+@enduml

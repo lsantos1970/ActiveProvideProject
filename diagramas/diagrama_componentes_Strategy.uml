@@ -1,0 +1,54 @@
+@startuml
+package "Activity Provider: Radiological Scenarios" {
+    component "Server REST" {
+        interface IConfig
+        interface IParams
+        interface IUserDeploy
+        interface IAnalyticsData
+        interface IAnalyticsList
+    }
+
+    component "RESTToFactoryAdapter" {
+        interface ITranslate
+    }
+
+    package "Abstract Factory Pattern" {
+        component "AbstractFactory" {
+            interface IScenarioFactory
+        }
+        component "MedicalFactory" {
+            AbstractFactory --> IScenarioFactory
+        }
+        component "IndustrialFactory" {
+            AbstractFactory --> IScenarioFactory
+        }
+    }
+
+    component "AnalysisContext" {
+        interface IStrategy
+    }
+
+    component "MedicalAnalysisStrategy" {
+        IStrategy --> AnalysisContext
+    }
+
+    component "IndustrialAnalysisStrategy" {
+        IStrategy --> AnalysisContext
+    }
+
+    component "Medical Scenario Object"
+    component "Industrial Scenario Object"
+}
+
+"Server REST" --> "RESTToFactoryAdapter" : Traduz chamadas HTTP
+"RESTToFactoryAdapter" --> "AbstractFactory" : Conecta ao padrão
+"AbstractFactory" --> "MedicalFactory"
+"AbstractFactory" --> "IndustrialFactory"
+"MedicalFactory" --> "Medical Scenario Object"
+"IndustrialFactory" --> "Industrial Scenario Object"
+
+"Server REST" --> "AnalysisContext" : Envia dados para análise
+"AnalysisContext" --> "MedicalAnalysisStrategy" : Executa estratégia médica
+"AnalysisContext" --> "IndustrialAnalysisStrategy" : Executa estratégia industrial
+@enduml
+

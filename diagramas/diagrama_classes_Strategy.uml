@@ -1,0 +1,23 @@
+@startuml
+interface IAnalysisStrategy {
+    + calculate(data: List[float]) : Dict[str, float]
+}
+
+class MedicalAnalysisStrategy implements IAnalysisStrategy {
+    + calculate(data: List[float]) : Dict[str, float]
+}
+
+class IndustrialAnalysisStrategy implements IAnalysisStrategy {
+    + calculate(data: List[float]) : Dict[str, float]
+}
+
+class AnalysisContext {
+    - strategy: IAnalysisStrategy
+    + setStrategy(strategy: IAnalysisStrategy) : void
+    + executeAnalysis(data: List[float]) : Dict[str, float]
+}
+
+AnalysisContext --> IAnalysisStrategy
+IAnalysisStrategy <|.. MedicalAnalysisStrategy
+IAnalysisStrategy <|.. IndustrialAnalysisStrategy
+@enduml

@@ -14,7 +14,7 @@ AbstractFactoryProject/
 │   ├── lead_apron.py
 │   └── protective_suit.py
 │
-├── templates/               # Templates HTML (se necessários)
+├── templates/               # Templates HTML 
 │   └── config.html
 │
 ├── requirements.txt         # Dependências do projeto

@@ -1,4 +1,3 @@
-
 @startuml
 package "Activity Provider: Radiological Scenarios" {
     

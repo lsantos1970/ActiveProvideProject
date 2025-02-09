@@ -6,4 +6,4 @@ from abstract_factory.equipment import Equipment
 class LeadApron(Equipment):
     def operate(self):
         # Retorna a ação realizada pelo avental de chumbo.
-        return "Avental de chumbo em uso."
+        return "Avental de Chumbo em uso."

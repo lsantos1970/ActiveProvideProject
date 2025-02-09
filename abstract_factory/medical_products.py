@@ -6,7 +6,7 @@ class MedicalEnvironment:
 
 class XRayMachine:
     def operate(self):
-        return "Máquina de raio-X operando."
+        return "Máquina de raio-X em funcionamento."
 
 class AdjustRadiationExposure:
     def execute(self):

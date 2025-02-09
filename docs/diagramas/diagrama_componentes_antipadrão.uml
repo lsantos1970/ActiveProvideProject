@@ -1,0 +1,75 @@
+
+@startuml
+package "Activity Provider: Radiological Scenarios" {
+    
+    component "Server REST" {
+        interface IConfig
+        interface IParams
+        interface IUserDeploy
+        interface IAnalyticsData
+        interface IAnalyticsList
+        note right of IConfig
+            Configuração da atividade
+        end note
+        note right of IParams
+            Parâmetros JSON
+        end note
+        note right of IUserDeploy
+            Endpoint de User Deploy
+        end note
+        note right of IAnalyticsData
+            Dados de Análise
+        end note
+        note right of IAnalyticsList
+            Lista de Análises
+        end note
+    }
+
+    component "RESTToFactoryAdapter" {
+        interface ITranslate
+    }
+
+    package "Abstract Factory Pattern" {
+        component "AbstractFactory" {
+            interface IScenarioFactory
+        }
+        component "MedicalFactory" {
+            AbstractFactory --> IScenarioFactory
+        }
+        component "IndustrialFactory" {
+            AbstractFactory --> IScenarioFactory
+        }
+    }
+
+    package "Strategy Pattern" {
+        component "AnalysisContext" {
+            interface IStrategy
+        }
+
+        component "MedicalAnalysisStrategy" {
+            IStrategy --> AnalysisContext
+        }
+
+        component "IndustrialAnalysisStrategy" {
+            IStrategy --> AnalysisContext
+        }
+    }
+}
+
+"Server REST" - [IConfig]
+"Server REST" - [IParams]
+"Server REST" - [IUserDeploy]
+"Server REST" - [IAnalyticsData]
+"Server REST" - [IAnalyticsList]
+
+"Server REST" --> RESTToFactoryAdapter : [HTTP Requests]
+"RESTToFactoryAdapter" --> AbstractFactory : [Translates Requests]
+"AbstractFactory" - [IScenarioFactory]
+"IScenarioFactory" - MedicalFactory
+"IScenarioFactory" - IndustrialFactory
+
+"Server REST" --> AnalysisContext : [Enviar dados]
+"AnalysisContext" - [IStrategy]
+"IStrategy" - MedicalAnalysisStrategy
+"IStrategy" - IndustrialAnalysisStrategy
+@enduml

@@ -1,0 +1,73 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+' Abstract Factory Pattern
+class RadiologyScenarioFactory {
+    +create_environment(): Environment
+    +create_equipment(): Equipment
+    +create_task(): Task
+}
+
+class MedicalScenarioFactory {
+    +create_environment(): MedicalEnvironment
+    +create_equipment(): XRayMachine
+    +create_task(): AdjustRadiationExposure
+}
+RadiologyScenarioFactory <|-- MedicalScenarioFactory
+
+class IndustrialScenarioFactory {
+    +create_environment(): IndustrialEnvironment
+    +create_equipment(): ProtectiveSuit
+    +create_task(): MonitorRadiationLevels
+}
+RadiologyScenarioFactory <|-- IndustrialScenarioFactory
+
+' Products for Medical
+class MedicalEnvironment
+class XRayMachine
+class AdjustRadiationExposure
+MedicalScenarioFactory --> MedicalEnvironment
+MedicalScenarioFactory --> XRayMachine
+MedicalScenarioFactory --> AdjustRadiationExposure
+
+' Products for Industrial
+class IndustrialEnvironment
+class ProtectiveSuit
+class MonitorRadiationLevels
+IndustrialScenarioFactory --> IndustrialEnvironment
+IndustrialScenarioFactory --> ProtectiveSuit
+IndustrialScenarioFactory --> MonitorRadiationLevels
+
+' Strategy Pattern
+class AnalysisContext {
+    +set_strategy(strategy: IStrategy): void
+    +execute_analysis(data): Result
+}
+
+interface IStrategy
+class MedicalAnalysisStrategy {
+    +execute(data): Result
+}
+class IndustrialAnalysisStrategy {
+    +execute(data): Result
+}
+AnalysisContext --> IStrategy
+IStrategy <|-- MedicalAnalysisStrategy
+IStrategy <|-- IndustrialAnalysisStrategy
+
+' Adapter
+class RESTToFactoryAdapter {
+    +process_request(data): Dict
+}
+RESTToFactoryAdapter --> RadiologyScenarioFactory
+
+' Server REST
+class ServerREST {
+    +/config_url
+    +/create_scenario
+    +/analyze/medical
+    +/analyze/industrial
+}
+ServerREST --> RESTToFactoryAdapter
+ServerREST --> AnalysisContext
+@enduml
